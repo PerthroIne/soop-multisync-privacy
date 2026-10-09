@@ -1,91 +1,29 @@
 <!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="SOOP MultiSync 개인정보처리방침">
-  <title>SOOP MultiSync 개인정보처리방침</title>
-  <style>
-    :root { color-scheme:light dark; --bg:#f4f7fb; --card:#fff; --text:#172033; --muted:#64748b; --line:#dce4ee; --accent:#008eaa; }
-    @media (prefers-color-scheme:dark) { :root { --bg:#0b111b; --card:#121b28; --text:#edf5ff; --muted:#9fb0c5; --line:#263548; --accent:#35d3ef; } }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.72; }
-    main { width:min(860px,calc(100% - 32px)); margin:40px auto; padding:clamp(26px,6vw,54px); background:var(--card); border:1px solid var(--line); border-radius:18px; }
-    h1 { margin:0 0 8px; line-height:1.25; }
-    h2 { margin:36px 0 10px; font-size:1.2rem; }
-    h3 { margin:22px 0 8px; font-size:1.02rem; }
-    .date,.muted,footer { color:var(--muted); }
-    .summary { padding:17px 19px; border-left:4px solid var(--accent); background:color-mix(in srgb,var(--accent) 8%,transparent); border-radius:8px; }
-    table { width:100%; border-collapse:collapse; margin:12px 0; }
-    th,td { padding:10px; border:1px solid var(--line); text-align:left; vertical-align:top; }
-    th { width:25%; }
-    code { overflow-wrap:anywhere; }
-    a { color:var(--accent); }
-    footer { margin-top:42px; padding-top:18px; border-top:1px solid var(--line); }
-  </style>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SOOP MultiSync 개인정보처리방침</title>
+<style>body{font:16px/1.8 system-ui,sans-serif;max-width:820px;margin:40px auto;padding:0 24px;color:#17212b}h1{font-size:26px}h2{font-size:20px;margin-top:30px}li{margin:8px 0}footer{border-top:1px solid #ccc;margin-top:32px;padding-top:20px}</style></head>
 <body>
-<main>
-  <h1>SOOP MultiSync 개인정보처리방침</h1>
-  <p class="date">시행일: 2026년 9월 1일 · 적용 버전: 0.7.0</p>
-
-  <p class="summary">SOOP MultiSync는 사용자가 함께 시청하는 SOOP 라이브 방송 2~4개의 재생 시각 차이를 기기 안에서 계산하고, 사용자가 동기화를 시작한 경우 안전한 범위에서 재생 속도를 조절하는 Chrome 확장 프로그램입니다. 아래 정보는 이 단일 목적을 제공하기 위해서만 처리되며 개발자 서버로 전송되지 않습니다.</p>
-
-  <h2>1. 적용 범위</h2>
-  <p>이 방침은 Chrome 웹 스토어에서 제공되는 SOOP MultiSync 확장 프로그램에 적용됩니다. 확장 프로그램은 <code>https://play.sooplive.com/*</code> 페이지와 해당 페이지가 멀티뷰 안에 포함된 프레임에서만 동작합니다.</p>
-
-  <h2>2. 처리하는 사용자 데이터와 수집 방법</h2>
-  <p>Chrome 웹 스토어 정책상 기기 안에서만 읽고 계산하는 경우도 사용자 데이터 처리에 포함될 수 있으므로, SOOP MultiSync는 다음 항목을 명시적으로 공개합니다.</p>
-  <table>
-    <thead><tr><th>분류</th><th>처리 항목</th><th>수집·처리 방법</th></tr></thead>
-    <tbody>
-      <tr><th>웹 탐색 활동</th><td>현재 열려 있는 <code>play.sooplive.com</code> 방송 페이지 URL, 방송 ID, 탭·프레임 구분값</td><td>SOOP 방송 페이지에 포함된 확장 프로그램 스크립트가 페이지가 열린 동안 자동으로 읽습니다.</td></tr>
-      <tr><th>웹사이트 콘텐츠</th><td>화면에 표시되는 방송 제목, 비디오 재생 위치, 재생 여부, 재생 속도, 버퍼 구간과 준비 상태</td><td>SOOP 플레이어의 비디오 요소에서 동기화 상태 계산에 필요한 값만 읽습니다.</td></tr>
-      <tr><th>미디어 시간 메타데이터</th><td>SOOP 미디어 패킷의 시작 시각과 UTC 시각, Worker의 오디오 시작 시각, fMP4 컨테이너의 트랙 종류·timescale·<code>tfdt</code> 디코드 시각</td><td>페이지가 이미 수신한 WebSocket·Worker 메시지와 SourceBuffer 입력을 브라우저 메모리에서 관찰하여 시간 숫자와 MP4 헤더만 추출합니다.</td></tr>
-      <tr><th>사용자 설정 상태</th><td>동기화 시작·중지 상태, 자동 감지된 개별 탭 또는 멀티뷰 그룹, 계산된 동기 오차와 목표 배속</td><td>사용자의 팝업 조작과 계산 결과로 생성되며 실행 중 메모리에만 유지됩니다.</td></tr>
-    </tbody>
-  </table>
-  <p>SourceBuffer에 추가되는 미디어 조각은 컨테이너 시간 헤더를 찾기 위해 메모리에서 검사되지만, 영상·음성 페이로드를 디코딩하거나 복사·저장·전송하지 않습니다. 채팅 WebSocket은 검사 대상에서 제외하며 채팅 내용, 로그인 정보, 쿠키, 비밀번호, 결제 정보, 위치 정보 및 개인 통신을 수집하지 않습니다.</p>
-
-  <h2>3. 사용자 데이터 처리 목적</h2>
-  <ul>
-    <li>개별 방송 탭과 멀티뷰 안의 방송 플레이어 자동 감지</li>
-    <li>각 플레이어의 공통 재생 시각 및 상대 동기 오차 계산</li>
-    <li>사용자가 동기화를 시작한 경우 앞선 방송만 제한적으로 감속</li>
-    <li>시계 또는 버퍼가 불안정할 때 제어를 중단하고 1.000배속으로 복귀</li>
-    <li>팝업과 방송 화면에 현재 동기화 상태 표시</li>
-  </ul>
-  <p>처리한 데이터는 광고, 사용자 프로파일링, 신용 평가, 분석·통계, 추적 또는 위 목적과 무관한 용도로 사용하지 않습니다.</p>
-
-  <h2>4. 저장 위치와 보관 기간</h2>
-  <p>처리 정보와 계산 결과는 사용자의 기기 안에 있는 페이지 메모리 및 Chrome 확장 프로그램 서비스 워커 메모리에서만 일시적으로 유지됩니다. 개발자 또는 제3자가 운영하는 서버, Chrome Storage, Local Storage, IndexedDB 또는 파일에 저장하지 않습니다.</p>
-  <p>닫히거나 응답이 중단된 방송의 상태는 동작 중인 목록에서 약 15초 이내 제거됩니다. 페이지 새로고침, 탭 닫기, 확장 프로그램 중지·삭제 또는 브라우저의 관련 실행 환경 종료 시 해당 메모리 정보는 더 이상 유지되지 않습니다. 서버에 보관된 사본이 없으므로 별도의 서버 삭제 요청 절차는 필요하지 않습니다.</p>
-
-  <h2>5. 외부 전송, 공유 및 판매</h2>
-  <p>SOOP MultiSync는 처리 정보를 개발자 서버나 분석·광고 서비스로 전송하지 않으며 제3자에게 공유하거나 판매하지 않습니다. 페이지와 확장 프로그램 사이의 상태 전달은 같은 사용자의 브라우저 내부에서만 이루어집니다.</p>
-  <p>팝업에서 사용자가 직접 “진단 정보 복사”를 누른 경우, 화면에 표시된 동기화 상태가 사용자의 시스템 클립보드에 복사됩니다. 이는 사용자의 명시적 동작이며 확장 프로그램이 외부로 전송하지 않습니다. 이후 붙여넣기와 공유 여부는 사용자가 결정합니다.</p>
-
-  <h2>6. 원격 코드 및 제3자 서비스</h2>
-  <p>확장 프로그램이 실행하는 모든 코드는 Chrome 웹 스토어에 제출된 패키지 안에 포함되어 있습니다. 외부 JavaScript, WebAssembly 또는 원격 코드를 다운로드하거나 실행하지 않습니다. SOOP 페이지가 자체적으로 실행하는 플레이어·Worker는 SOOP 서비스의 일부이며, 확장 프로그램은 그 코드의 URL을 가져와 확장 프로그램 코드로 실행하지 않습니다.</p>
-  <p>SOOP 웹사이트 자체의 데이터 처리는 SOOP의 약관과 개인정보처리방침을 따릅니다. 이 확장 프로그램은 SOOP와 독립적으로 제공되며 SOOP가 운영하거나 보증하는 공식 제품이 아닙니다.</p>
-
-  <h2>7. 사용자 선택과 통제</h2>
-  <p>동기화 제어는 사용자가 팝업의 시작 버튼을 누른 뒤에만 활성화됩니다. 중지 버튼을 누르면 모든 제어 배속이 1.000배속으로 복귀합니다. 사용자는 확장 프로그램을 끄거나 삭제하여 모든 처리를 중단할 수 있습니다.</p>
-
-  <h2>8. 보안 및 최소 권한</h2>
-  <p>확장 프로그램은 단일 목적에 필요한 <code>https://play.sooplive.com/*</code> 호스트 접근만 요청합니다. 일반 웹사이트의 방문 기록이나 다른 도메인의 콘텐츠에는 접근하지 않습니다. 처리 데이터는 외부 네트워크로 전송하지 않고 필요한 최근 표본만 제한된 메모리 배열에 유지합니다.</p>
-
-  <h2>9. Chrome 웹 스토어 제한적 사용 준수</h2>
-  <p>SOOP MultiSync가 Chrome API 및 웹페이지에서 받은 정보의 사용은 Chrome 웹 스토어 사용자 데이터 정책과 제한적 사용(Limited Use) 요건을 준수합니다. 데이터는 공개된 단일 목적 제공에만 사용되며, 개인화 광고·판매·무관한 목적의 전송 또는 허용되지 않은 사람의 열람에 사용되지 않습니다.</p>
-  <p lang="en">SOOP MultiSync's use of information received from Chrome APIs and webpages adheres to the Chrome Web Store User Data Policy, including the Limited Use requirements.</p>
-
-  <h2>10. 방침 변경</h2>
-  <p>기능 또는 데이터 처리 방식이 변경되면 이 페이지의 시행일과 내용을 갱신합니다. 중요한 변경은 Chrome 웹 스토어 등록 정보 또는 이 페이지를 통해 안내합니다.</p>
-
-  <h2>11. 문의</h2>
-  <p>개인정보처리방침 또는 데이터 처리에 관한 문의는 <a href="https://github.com/PerthroIne/soop-multisync-privacy/issues">GitHub Issues</a>에서 접수할 수 있습니다.</p>
-
-  <footer>SOOP MultiSync · 최종 갱신 2026-09-01</footer>
-</main>
-</body>
-</html>
+<h1>SOOP MultiSync 개인정보처리방침</h1>
+<p>적용 버전: 0.9.8 · 최종 수정: 2026년 10월 9일</p>
+<p>SOOP MultiSync는 SOOP와 독립적인 비공식 확장 프로그램입니다. 선택한 방송의 재생 시각 동기화와 누적 재생 지연 관리, 선택적인 소리 시간차 보정을 제공합니다.</p>
+<h2>1. 수집 및 처리하는 정보</h2>
+<ul>
+<li>감지한 SOOP 방송의 페이지 주소, 방송 ID, 공개 방송 제목·닉네임, 탭·프레임 식별 정보. 일반적인 브라우저 방문 기록 전체를 조회하지 않습니다.</li>
+<li>플레이어의 재생 위치, 배속, 일시정지 여부, 준비 상태, 버퍼·탐색 가능 범위, 미디어 시간 메타데이터 및 방송 미디어 수신 타이밍.</li>
+<li>소리 측정 또는 소리 자동 맞춤을 사용한 경우 재생 중인 방송 오디오를 브라우저 안에서 처리하며 소리 크기 변화 등의 비교 특징, 방송 간 시간차 후보와 검증 상태를 계산합니다. 사용자 마이크는 사용하지 않습니다.</li>
+<li>동기화 대상 선택, 목표 버퍼, 수동 소리 시간차 등 확장 프로그램 제어 설정.</li>
+</ul>
+<p>시청자의 로그인 자격 증명, 인증 쿠키, 결제 정보, 채팅 내용, 위치 정보는 수집하지 않습니다. 일반적인 키 입력이나 마우스 이동을 추적하지 않습니다. 공개 방송의 내용에는 방송자의 목소리 등이 포함될 수 있으며, 선택적인 오디오 처리는 소리 시간차 비교에 한정합니다.</p>
+<h2>2. 처리 목적 및 방법</h2>
+<p>방송 감지, 재생 시각 비교, 배속·재생 위치 조절, 목표 버퍼 관리, 공통 소리 시간차 계산 및 안전 상태 확인에만 사용합니다. 오디오를 문자로 변환하거나 개인을 식별하기 위한 분석을 하지 않습니다. 자동 소리 맞춤은 기본적으로 꺼져 있으며 사용자가 켜는 실험 기능입니다.</p>
+<h2>3. 보관 및 삭제</h2>
+<p>확장 프로그램의 처리 데이터와 설정은 브라우저의 확장 프로그램 및 방송 페이지 메모리에서 관리하며 개발자가 운영하는 서버나 영구 저장소에 저장하지 않습니다. 오디오 비교 표본은 제한된 분석 구간의 메모리에 보관하고 오래된 표본과 안정 조건을 충족하지 않는 표본은 제거합니다. 측정을 중단하면 해당 측정 세션을 정리합니다. 관련 페이지와 확장 프로그램 실행 환경이 종료되어 메모리가 해제되면 데이터도 소멸합니다.</p>
+<h2>4. 전송·공유 및 사용자 요청 진단</h2>
+<p>처리 정보를 개발자 서버나 분석·광고 업체에 자동 전송하지 않으며 판매하거나 제3자와 공유하지 않습니다. 브라우저 내부의 방송 페이지와 확장 프로그램 간 통신은 기능 수행을 위한 로컬 처리입니다. SOOP 자체의 방송 전송은 SOOP의 서비스 및 정책에 따릅니다.</p>
+<p>사용자가 ‘진단 정보 복사’를 누르면 방송 주소·식별 정보·플레이어 상태·보정 상태 등이 포함된 진단 JSON을 클립보드에 복사합니다. 이후 사용자가 직접 다른 서비스에 붙여넣거나 전달한 내용은 해당 서비스의 정책에 따릅니다. 공유하기 전에 내용을 확인하고 불필요한 정보를 지우세요. 이 공개용 패키지에는 오디오 표본 자동 업로드 기능이 없습니다.</p>
+<h2>5. 사용자의 제어</h2>
+<p>동기화·지연 관리·소리 측정을 중단하거나 자동 소리 맞춤을 끌 수 있습니다. 동기화할 방송과 개별 지연 관리 방송을 선택할 수 있습니다. 확장 프로그램을 비활성화하거나 제거하면 확장 프로그램의 추가 처리가 중단됩니다.</p>
+<h2>6. 정책 변경 및 문의</h2>
+<p>처리 범위가 변경되면 이 문서의 버전과 수정일을 갱신합니다. 개인정보 관련 문의는 Chrome 웹스토어의 SOOP MultiSync 항목에 표시된 개발자 연락처 또는 지원 창구로 보내 주세요.</p>
+<footer>SOOP MultiSync는 처리 정보를 판매하거나 목적과 무관하게 사용하지 않으며 신용 판단 또는 대출 목적으로 사용하지 않습니다.</footer>
+</body></html>
